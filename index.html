@@ -584,7 +584,7 @@
           </div>
         </div>
 
-        <form action="forms/contact.php" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="300">
+        <form id="form" class="php-email-form" data-aos="fade-up" data-aos-delay="300">
           <div class="row gy-4">
 
             <div class="col-md-6">
@@ -608,7 +608,7 @@
               <div class="error-message"></div>
               <div class="sent-message">Your message has been sent. Thank you!</div>
 
-              <button type="submit">Send Message</button>
+              <button id="submit" type="submit">Send Message</button>
             </div>
 
           </div>
@@ -663,6 +663,28 @@
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script>
+   const form = document.querySelector("#form")
+   const submitButton = document.querySelector("#submit")
+   const scriptURL = 'https://script.google.com/macros/s/AKfycby_EAVSj5OJWQp-3WFJ-gJ5X_mLKr1Y49uRUEfqHeK_XeQkVIm5JrvBuw01kfrufys0/exec'
+
+   form.addEventListener('submit', e => {
+     submitButton.disabled = true
+     e.preventDefault()
+     let requestBody = new FormData(form)
+     fetch(scriptURL, { method: 'POST', body: requestBody})
+       .then(response => {
+          alert('Success!', response)
+          submitButton.disabled = false
+         })
+       .catch(error => {
+       alert('Error!', error.message)
+         submitButton.disabled = false
+
+       }
+       )
+   })
+</script>
 
 </body>
 
